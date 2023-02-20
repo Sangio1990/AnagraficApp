@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">AnagraficApp</string>
+    <string name="button_delete_text">Del</string>
+    <string name="add_person_button_text">Aggiungi Persona</string>
+    <string name="name_label_text">Nome:</string>
+    <string name="name_hint">Inserisci qui il nome</string>
+    <string name="surname_label_text">Cognome:</string>
+    <string name="surname_hint">Inserisci qui il cognome</string>
+    <string name="birthday_label_text">Nato il:</string>
+    <string name="birthday_hint">Inserisci qui la data di nascita</string>
+    <string name="birthplace_label_text">Nato a:</string>
+    <string name="birthplace_hint">Inserisci qui il comune di nascita</string>
+    <string name="province_label_text">Provincia:</string>
+    <string name="province_hint">Inserisci qui la sigla della provincia (MI)</string>
+    <string name="gender_label_text">Sesso:</string>
+    <string name="save_button_text">Salva</string>
+    <string name="male_radiobutton_label_text">Maschio</string>
+    <string name="female_radiobutton_label_text">Femmina</string>
+    <string name="new_person_title_label_text">NUOVA PERSONA</string>
+</resources>
