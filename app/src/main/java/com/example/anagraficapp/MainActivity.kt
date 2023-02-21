@@ -53,10 +53,12 @@ class MainActivity : AppCompatActivity() {
                     PersonsDatabase::class.java,
                     "anagrafica"
                 ).build().getPersonDao().getAll()
-                adapter = PersonAdapter(data) {
-                    Executors.newSingleThreadExecutor().execute {
-                        //Funzione di callback che forza la rigenerazione della view
-                        PersonService.removePerson(it)
+                runOnUiThread {
+                    adapter = PersonAdapter(data) {
+                        Executors.newSingleThreadExecutor().execute {
+                            //Funzione di callback che forza la rigenerazione della view
+                            PersonService.removePerson(it)
+                        }
                     }
                 }
             }
