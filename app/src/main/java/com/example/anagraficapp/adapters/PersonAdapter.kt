@@ -11,13 +11,14 @@ import com.example.anagraficapp.R
 import com.example.anagraficapp.entities.Person
 import com.example.anagraficapp.services.PersonService
 import java.util.*
+import java.util.concurrent.Executors
 
 /**
  * Adapter il cui compito è quello di gestire la visualizzazione dei dati nella RecyclerView in nella MainActivity
  * @param personList: List<Person>  ->  Lista di persone
  * @return viewHolder: View -> La view da mostrare
  */
-class PersonAdapter(val personList: List<Person>,private val callback: () -> Unit) :
+class PersonAdapter(val personList: List<Person>, private val callback: (Long) -> Unit) :
     RecyclerView.Adapter<PersonAdapter.viewHolder>() {
     class viewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nameTextView: TextView = view.findViewById(R.id.text_view_person_name)
@@ -48,7 +49,6 @@ class PersonAdapter(val personList: List<Person>,private val callback: () -> Uni
      * @param holder -> Il ViewHolder preparato da onCreateViewHolder
      */
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
-        val perServ = PersonService()
         val person = personList[position]
         // Rendo il primo carattere del nome e del cognome in uppercase
         val fullName = "${
@@ -69,23 +69,12 @@ class PersonAdapter(val personList: List<Person>,private val callback: () -> Uni
         holder.birthdayTextView.text = person.birthday
         holder.provinceTextView.text = fullBirthplace
 
+
         // Setto l'azione che il bottone DEL deve eseguire
         holder.delButton.setOnClickListener {
-            Log.d("DEBUG DEL", "Cancellazione di ${personList[position].name} ${personList[position].surname} ")
-            delPerson(perServ, position)
-            // Dopo la cancellazione richiamo la funzione di callback che forza la view ad aggiornarsi.
-            callback()
+            // Richiamo la funzione di callback che forza la view ad aggiornarsi.
+            callback(person.id)
         }
     }
-
-    /**
-     * Metodo incaricato di eliminare un dato dalla lista
-     * @param perServ: Service che si occuppa della gestione dei dati
-     * @param position: Posizione del relativo item
-     */
-    fun delPerson(perServ: PersonService, position: Int){
-        perServ.removePerson(personList[position])
-    }
-
 
 }

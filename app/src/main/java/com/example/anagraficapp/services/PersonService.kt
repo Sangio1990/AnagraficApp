@@ -1,25 +1,34 @@
 package com.example.anagraficapp.services
-
+import com.example.anagraficapp.dao.PersonDao
 import com.example.anagraficapp.entities.Person
-import java.util.*
 
-class PersonService : IPersonService {
-    companion object{
-        val personList: MutableList<Person> = mutableListOf(
-            Person(1, "Mario", "rossi", "01/01/1965","Milano", "MI", "M"),
-            Person(2, "Lucia", "Bianchi", "12/05/1987", "Torino", "TO", "F"),
-            Person(3, "Luigi", "Mario", "06/11/1983 ", "Venezia", "VE", "M")
-        )
+object PersonService : IPersonService {
+    private lateinit var dao: PersonDao
+    fun setDao(input_dao: PersonDao) {
+        dao = input_dao
     }
 
-    override fun addPerson(person: Person){
-        personList.add(person)
+    fun getDao() = dao
+
+
+    override fun addPerson(person: Person) {
+        dao.save(person)
+
     }
 
-    override fun removePerson(person: Person){
-        personList.remove(person)
+    override fun removePerson(person: Person) {
+
+        dao.delete(person)
+
     }
 
-    override fun getAllPersons(): List<Person> = personList
+    fun removePerson(id: Long) {
+        dao.delete(getAllPersons().first { p -> p.id == id })
+    }
+
+    override fun getAllPersons(): List<Person> {
+        return dao.getAll()
+    }
+
 
 }

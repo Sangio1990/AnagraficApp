@@ -13,4 +13,9 @@ interface PersonDao {
      * @return le persone salvate nel database.
      */
     fun getAll(): List<Person>
+
+    /**
+     * Cancella una persona dal database
+     */
+    fun delete(person: Person)
 }

@@ -1,6 +1,7 @@
 package com.example.anagraficapp.entities
 
-import java.util.Date
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 /*
 Attributes needed
@@ -12,5 +13,16 @@ Provincia di Nascita: String
 Sesso: String
  */
 
-data class Person(val id: Long, val name: String, val surname: String, val birthday: String, val birthcity: String, val province: String, val gender: String){
+@Entity(tableName = "persons")
+data class Person(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long,
+    val name: String,
+    val surname: String,
+    val birthday: String,
+    val birthcity: String,
+    val province: String,
+    val gender: String
+){
+    constructor() : this(0, "", "", "", "", "", "")
 }
