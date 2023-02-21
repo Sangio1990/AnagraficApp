@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.room.Room
 import com.example.anagraficapp.entities.Person
 import com.example.anagraficapp.services.PersonService
@@ -28,17 +29,29 @@ class NewPersonActivity : AppCompatActivity() {
                 findViewById<EditText>(R.id.edit_text_birthday).text.toString(),
                 findViewById<EditText>(R.id.edit_text_birthplace).text.toString(),
                 findViewById<EditText>(R.id.edit_text_province).text.toString(),
-                if (findViewById<RadioButton>(R.id.male_radioButton).isActivated) {
+                if (findViewById<RadioButton>(R.id.male_radioButton).isChecked) {
                     "M"
-                } else {
+                } else if (findViewById<RadioButton>(R.id.female_radioButton).isChecked) {
                     "F"
-                }
+                } else
+                    "U"
             )
-            Executors.newSingleThreadExecutor().execute {
-                PersonService.addPerson(person)
+            // Piccolo controllo che impedisce di salvare un dato con uno dei campi vuoti
+            if (person.name == "" ||
+                person.surname == "" ||
+                person.birthday == "" ||
+                person.birthcity == "" ||
+                person.province == "" ||
+                person.gender == "U"
+            ) {
+                Toast.makeText(applicationContext, "Devi riempire tutti i campi", Toast.LENGTH_LONG)
+                    .show()
+            } else {
+                Executors.newSingleThreadExecutor().execute {
+                    PersonService.addPerson(person)
+                }
+                finish()
             }
-            Log.d("NewPersonActivity", "${person.name}, ${person.surname}, ${person.gender}")
-            finish()
         }
 
 
