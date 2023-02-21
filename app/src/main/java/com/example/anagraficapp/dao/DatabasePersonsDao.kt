@@ -6,6 +6,9 @@ import androidx.room.Insert
 import androidx.room.Query
 import com.example.anagraficapp.entities.Person
 
+/**
+ * Intergaccia con le annotazioni
+ */
 @Dao
 interface DatabasePersonsDao: PersonDao {
     @Query("SELECT * FROM persons")

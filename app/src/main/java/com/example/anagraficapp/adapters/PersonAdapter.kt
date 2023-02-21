@@ -1,6 +1,5 @@
 package com.example.anagraficapp.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.anagraficapp.R
 import com.example.anagraficapp.entities.Person
-import com.example.anagraficapp.services.PersonService
 import java.util.*
-import java.util.concurrent.Executors
 
 /**
  * Adapter il cui compito è quello di gestire la visualizzazione dei dati nella RecyclerView in nella MainActivity

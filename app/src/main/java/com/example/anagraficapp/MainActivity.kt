@@ -4,20 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Adapter
 import android.widget.Button
-import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.example.anagraficapp.adapters.PersonAdapter
 import com.example.anagraficapp.dao.PersonsDatabase
 import com.example.anagraficapp.services.PersonService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
@@ -34,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         // Inizializzo il Dao
         val personDao = db.getPersonDao()
 
-        // Inizializzo e riempio di elementi la RecyclerView
+        // Dichiaro il layout da utilizzare nella RecyclerView
         findViewById<RecyclerView>(R.id.list_persons).apply {
             layoutManager =
                 LinearLayoutManager(context).apply { orientation = RecyclerView.VERTICAL }
@@ -45,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Log.d("MainActivity", "onResume()")
-        // Inizializzo e riempio di elementi la RecyclerView
+        // Inizializzo nuovamente il database e riempio di elementi la RecyclerView
         findViewById<RecyclerView>(R.id.list_persons).apply {
             Executors.newSingleThreadExecutor().execute {
                 val data = Room.databaseBuilder(
@@ -53,10 +46,11 @@ class MainActivity : AppCompatActivity() {
                     PersonsDatabase::class.java,
                     "anagrafica"
                 ).build().getPersonDao().getAll()
+                // Ritorno sull'UI Thread per evitare l'errore nella view
                 runOnUiThread {
                     adapter = PersonAdapter(data) {
                         Executors.newSingleThreadExecutor().execute {
-                            //Funzione di callback che forza la rigenerazione della view
+                            //Funzione di callback che rimuove il dato
                             PersonService.removePerson(it)
                         }
                     }

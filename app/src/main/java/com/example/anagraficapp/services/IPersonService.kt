@@ -13,14 +13,14 @@ interface IPersonService {
      * @param person: Person
      * @return Unit
      */
-    fun addPerson(person: Person): Unit
+    fun addPerson(person: Person)
 
     /**
      * Funzione che si occupa della rimozione di una persona
      * @param person: Person
      * @return Unit
      */
-    fun removePerson(person: Person): Unit
+    fun removePerson(person: Person)
 
     /**
      * Funzione che si occupa di ritornare tutte le persone salvate in una lista

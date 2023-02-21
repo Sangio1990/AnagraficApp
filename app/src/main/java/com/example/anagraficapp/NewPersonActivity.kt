@@ -2,12 +2,10 @@ package com.example.anagraficapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.Toast
-import androidx.room.Room
 import com.example.anagraficapp.entities.Person
 import com.example.anagraficapp.services.PersonService
 import java.util.concurrent.Executors
@@ -44,12 +42,14 @@ class NewPersonActivity : AppCompatActivity() {
                 person.province == "" ||
                 person.gender == "U"
             ) {
+                // Se un campo è vuoto mando un piccolo messaggio di errore all'utente
                 Toast.makeText(applicationContext, "Devi riempire tutti i campi", Toast.LENGTH_LONG)
                     .show()
             } else {
                 Executors.newSingleThreadExecutor().execute {
                     PersonService.addPerson(person)
                 }
+                // Chiudo la view
                 finish()
             }
         }
